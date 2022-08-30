@@ -3,8 +3,7 @@
         <title>Greeen translator</title>
     </head>
     <body>
-        <textarea id="input_text" cols="80" rows="20">ənˈtɪl aɪ bɪˈkeɪm ə ˈgrænpeərənt maɪˈsɛlf, haʊˈɛvə, aɪ ˈnɛvər əˈpriːʃɪeɪtɪd haʊ ɪmˈpɔːtənt ˈælən ænd ˈænʤələ mʌst hæv biːn fɔː ðə ˈhæpɪnɪs ænd ˈwɛlfeər ɒv ðeə ˈgrænˌpeərənts.
-        </textarea>
+        <textarea id="input_text" cols="80" rows="20">Нажми на кнопку</textarea>
         <br>
         <button id="translate_button">Do the magic</button>
         <br>
@@ -19,9 +18,10 @@
                 const i = document.getElementById('input_text');
                 const input_array = Array.from(
                     new Set(
-                        i.value.replace('.', ' ').replace(',', ' ').replace('!', ' ').replace('?', ' ').replace(/(?:\r\n|\r|\n)/g, ' ').toLowerCase().split(' ')
+                        i.value.replaceAll('.', ' ').replaceAll(',', ' ').replaceAll('!', ' ').replaceAll('?', ' ').replace(/(?:\r\n|\r|\n)/g, ' ').toLowerCase().split(' ')
                     )
                 );
+                console.log(input_array);
                 let ret = '';
                 alphabet.forEach(sym => {
                     let words = input_array.filter((word) => (word.includes(sym)));
