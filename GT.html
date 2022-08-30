@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Greeen translator</title>
+    </head>
+    <body>
+        <textarea id="input_text" cols="80" rows="20">ənˈtɪl aɪ bɪˈkeɪm ə ˈgrænpeərənt maɪˈsɛlf, haʊˈɛvə, aɪ ˈnɛvər əˈpriːʃɪeɪtɪd haʊ ɪmˈpɔːtənt ˈælən ænd ˈænʤələ mʌst hæv biːn fɔː ðə ˈhæpɪnɪs ænd ˈwɛlfeər ɒv ðeə ˈgrænˌpeərənts.
+        </textarea>
+        <br>
+        <button id="translate_button">Do the magic</button>
+        <br>
+        <textarea id="output_text" cols="80" rows="10">Получишь результат</textarea>
+        <script>
+            let b = document.getElementById('translate_button');
+            let o = document.getElementById('output_text');
+
+            const alphabet = ['iː','ɪ','ɛ','æ','ɑː','ɒ','uː','ʊ','ʌ','ɔː','ɜː','ə','eɪ','aɪ','ɔɪ','əʊ','aʊ','ɪə','ʊə','eə','aɪə','aʊə'];
+
+            let translate = () => {
+                const i = document.getElementById('input_text');
+                const input_array = Array.from(
+                    new Set(
+                        i.value.replace('.', ' ').replace(',', ' ').replace('!', ' ').replace('?', ' ').replace(/(?:\r\n|\r|\n)/g, ' ').toLowerCase().split(' ')
+                    )
+                );
+                let ret = '';
+                alphabet.forEach(sym => {
+                    let words = input_array.filter((word) => (word.includes(sym)));
+                    if(words.length > 0) {
+                        ret += `${sym} - ${words.join(', ')}\n`
+                    }
+                })
+                o.value = ret;
+            };
+            b.addEventListener("click", translate);
+        </script>
+    </body>
+</html>
