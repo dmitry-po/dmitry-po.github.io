@@ -24,7 +24,9 @@
                 console.log(input_array);
                 let ret = '';
                 alphabet.forEach(sym => {
-                    let words = input_array.filter((word) => (word.includes(sym)));
+                    let words = input_array
+                        .filter((word) => (word.includes(sym)))
+                        .sort((a, b) => (a.split("ˈ").length - b.split("ˈ").length));
                     if(words.length > 0) {
                         ret += `${sym} - ${words.join(', ')}\n`
                     }
