@@ -1,0 +1,78 @@
+
+<!-- saved from url=(0035)https://dmitry-po.github.io/GT.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Greeen translator</title>
+    </head>
+    <body>
+        <!--    <input type="text" id="input_text" placeholder="00:00" value="00:25"> -->
+        <button id="work_timer">Work (25m)</button>
+        <button id="rest_timer">Rest (5m)</button>
+        <button id="stop_timer">Stop</button>
+        <br>
+        <textarea id="text_output" style="border:0; resize:none; width: 300px; height: 300px;">Daily log</textarea>
+
+        <script>
+            //setTimeout(func, time);
+            let w = document.getElementById('work_timer');
+            let r = document.getElementById('rest_timer');
+            let s = document.getElementById('stop_timer');
+            let text_output = document.getElementById('text_output');
+            let text_output_value = 'Daily log:';
+
+            const notification = new Audio('https://interactive-examples.mdn.mozilla.net/media/cc0-audio/t-rex-roar.mp3');
+
+            let status = 'idle';
+
+            let timer;
+
+            let run_timer = (minutes, timer_type) => {
+                const start_time = new Date();
+                let message = start_time.getHours() + ':' + start_time.getMinutes() + ' - ... ' + timer_type;
+                text_output.value = text_output_value + '\n' + message;
+
+                let timer_seconds = minutes * 60 * 1000;
+                if(status === 'idle') {
+                    status = 'busy';
+
+                    timer = setTimeout(
+                        () => {
+                            status = 'idle';
+                            notification.play();
+                            const end_time = new Date();
+                            message = start_time.getHours() + ':' + start_time.getMinutes() + ' - ' + end_time.getHours() + ':' + end_time.getMinutes() + ' ' + timer_type;
+                            text_output_value = text_output_value + '\n' + message
+                            text_output.value = text_output_value;
+                        }, 
+                        timer_seconds
+                    );
+                } else {
+                    console.log('timer is busy. Try again later');
+                }
+            };
+            
+            let work_timer =  () => {
+                return run_timer(25, 'working');
+            };
+
+            let rest_timer =  () => {
+                return run_timer(5, 'resting');
+            };
+
+            let stop_timer = () => {
+                if(status!='idle') {
+                    timer.clearTimeout;
+                    clearTimeout(timer);
+                    status = 'idle';
+                    const c_time = new Date();
+                    let message = c_time.getHours() + ':' + c_time.getMinutes() + ' timer stoped';
+                    text_output_value = text_output.value + '\n' + message
+                    text_output.value = text_output_value;
+                }
+            }
+
+            w.addEventListener("click", work_timer);
+            r.addEventListener("click", rest_timer);
+            s.addEventListener("click", stop_timer);
+        </script>
+    
+</body></html>
